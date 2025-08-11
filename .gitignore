@@ -1,0 +1,9 @@
+node_modules/
+package-lock.json
+.env
+.env.*
+!.env.production.example
+__pycache__/
+*.pyc
+.pytest_cache/
+
