@@ -1,16 +1,33 @@
-# ANGEL.AI xx – Phase A Baseline
+# ANGEL.AI Web
 
-This repository is the **runnable baseline (Phase A)** for ANGEL.AI xx.  
-Run `./install.sh` on Ubuntu 22.04 to spin up the full stack (FastAPI backend, Next.js dashboard, PostgreSQL, Redis, Prometheus, Grafana) in Docker.
+**Tagline:** “Divine Execution. Extreme Profits.”
 
-Sub‑projects:
-* **backend/** – FastAPI async trade API
-* **frontend/** – Next.js 14 + Tailwind dark‑mode dashboard
-* **infra/** – Terraform (GCP) + Kubernetes manifests
-* **scripts/** – utility scripts (latency bench, health checks)
+## Design Tokens
+- Theme: Glassmorphism dark (90%–60% black blur)
+- Colors:
+  - glass: `rgba(15 15 15 / .62)`
+  - cyan: `#00E0FF`
+  - purple: `#A855F7`
+  - red: `#FF3B5C`
+  - green: `#00F5A0`
+  - dark: `#0F0F0F`
+- Radii: cards `12px`, modals `24px`
+- Typography: Inter (body), Space Grotesk (headers), JetBrains Mono (numbers)
 
-All code is type‑hinted, async‑ready, and metrics exposed on `/metrics`.  
-Secrets go into `.env.production` (see template provided).
+## Development
+```
+pnpm install
+pnpm dev
+```
 
-> Phase A delivers the skeleton. Future phases will drop advanced latency core, DeepAgent logic, nightly back‑tests, FPGA feed drivers, etc., without breaking this baseline.  
+## Production
+```
+pnpm build && pnpm start
+```
 
+## Testing
+```
+pnpm test
+```
+
+Screenshots to be added after full UI implementation.
