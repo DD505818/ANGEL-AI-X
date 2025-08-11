@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --glass: rgba(15, 15, 15, 0.62);
+  --cyan: #00E0FF;
+  --purple: #A855F7;
+  --red: #FF3B5C;
+  --green: #00F5A0;
+  --dark: #0F0F0F;
+  --radius-card: 12px;
+  --radius-modal: 24px;
+  --shadow-glass: inset 0 0 2px rgba(255, 255, 255, 0.1);
+  --blur-glass: blur(24px);
+}
+
+body {
+  @apply bg-dark text-white;
+}

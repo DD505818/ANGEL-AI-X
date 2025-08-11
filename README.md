@@ -14,3 +14,18 @@ Secrets go into `.env.production` (see template provided).
 
 > Phase A delivers the skeleton. Future phases will drop advanced latency core, DeepAgent logic, nightly back‑tests, FPGA feed drivers, etc., without breaking this baseline.  
 
+
+## Design Tokens
+
+| Token | Value |
+|-------|-------|
+| glass | rgba(15 15 15 / .62) |
+| cyan | #00E0FF |
+| purple | #A855F7 |
+| red | #FF3B5C |
+| green | #00F5A0 |
+| dark | #0F0F0F |
+
+Logo located at `public/halo.svg`.
+
+<!-- TODO: Add dashboard screenshot once UI is implemented -->
