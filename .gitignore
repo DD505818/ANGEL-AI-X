@@ -1,0 +1,10 @@
+__pycache__/
+node_modules/
+.pytest_cache/
+*.pyc
+=======
+.env
+*.pyc
+package-lock.json
+
+node_modules
