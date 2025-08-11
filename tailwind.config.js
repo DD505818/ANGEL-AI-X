@@ -1,7 +1,10 @@
-
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./src/**/*.{ts,tsx}'],
+  content: [
+    './src/**/*.{ts,tsx}',
+    './app/**/*.{js,ts,jsx,tsx}',
+    './web/src/**/*.{js,ts,jsx,tsx}'
+  ],
   darkMode: 'class',
   theme: {
     extend: {
@@ -11,24 +14,18 @@ module.exports = {
         purple: '#A855F7',
         red: '#FF3B5C',
         green: '#00F5A0',
-        dark: '#0F0F0F',
+        dark: '#0F0F0F'
       },
       borderRadius: {
         card: '12px',
-        modal: '24px',
+        modal: '24px'
       },
       fontFamily: {
         inter: ['var(--font-inter)', 'sans-serif'],
         space: ['var(--font-space)', 'sans-serif'],
-        jetbrains: ['var(--font-mono)', 'monospace'],
-      },
-    },
+        jetbrains: ['var(--font-mono)', 'monospace']
+      }
+    }
   },
-=======
-module.exports = {
-  content: ["./app/**/*.{js,ts,jsx,tsx}", "./web/src/**/*.{js,ts,jsx,tsx}"],
-  darkMode: 'class',
-  theme: { extend: {} },
-
-  plugins: [],
+  plugins: []
 };
