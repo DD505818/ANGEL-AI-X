@@ -1,12 +1,13 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import { vi } from 'vitest';
 import { DashboardGrid } from '../components/DashboardGrid';
 
-jest.mock('../lib/firebase', () => ({ db: {} }));
-jest.mock('firebase/firestore', () => ({
-  doc: jest.fn(),
-  getDoc: jest.fn(() => Promise.resolve({ exists: () => false })),
-  setDoc: jest.fn(() => Promise.resolve()),
+vi.mock('../lib/firebase', () => ({ db: {} }));
+vi.mock('firebase/firestore', () => ({
+  doc: vi.fn(),
+  getDoc: vi.fn(() => Promise.resolve({ exists: () => false })),
+  setDoc: vi.fn(() => Promise.resolve()),
 }));
 
 test('renders default widgets', async () => {
