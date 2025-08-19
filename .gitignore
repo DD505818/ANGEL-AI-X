@@ -1,0 +1,19 @@
+# Node modules
+node_modules/
+
+# Build outputs
+build/
+dist/
+.next/
+
+# Logs
+*.log
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Python artifacts
+__pycache__/
+*.pyc
