@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: angelai-config
+  labels:
+    app: angelai
+    component: backtester
+data:
+  config.yaml: |
+    symbol: BTC/USDT
+    fees:
+      taker_bp: 5.0
+      maker_bp: 5.0

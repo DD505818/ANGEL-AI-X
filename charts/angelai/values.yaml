@@ -1,0 +1,4 @@
+image:
+  repository: angelai/app
+  tag: latest
+color: blue

@@ -1,0 +1,4 @@
+symbol: BTC/USDT
+fees:
+  taker_bp: 5.0
+  maker_bp: 5.0
