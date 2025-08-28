@@ -1,14 +1,19 @@
-import Image from 'next/image';
+import dynamic from 'next/dynamic';
+import type { FC } from 'react';
 
 /**
  * Home page rendering ANGEL.AI branding.
  */
-export default function Home() {
+const HaloLogo = dynamic(() => import('./HaloLogo'), { ssr: false });
+
+const Home: FC = (): JSX.Element => {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center gap-4">
-      <Image src="/halo.svg" alt="ANGEL.AI logo" width={80} height={80} />
+      <HaloLogo />
       <h1 className="font-space text-4xl">ANGEL.AI</h1>
       <p className="font-inter">Divine Execution. Extreme Profits.</p>
     </main>
   );
-}
+};
+
+export default Home;
