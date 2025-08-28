@@ -1,0 +1,11 @@
+[project]
+name = "angelai-api"
+version = "0.1.0"
+dependencies = [
+  "fastapi",
+  "pandas",
+  "optuna",
+  "matplotlib",
+  "pyyaml",
+  "numpy"
+]
