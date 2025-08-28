@@ -1,33 +1,45 @@
-# ANGEL.AI Web
+# ANGEL.AI v10.0 — Deployment Bundle
 
-**Tagline:** “Divine Execution. Extreme Profits.”
+This bundle automates deployment of governance/reg adapters, swarm agents, ORB parameters,
+risk/Kelly limits, execution mesh, compounding daemon, dashboard, stress tests, and validation.
 
-## Design Tokens
-- Theme: Glassmorphism dark (90%–60% black blur)
-- Colors:
-  - glass: `rgba(15 15 15 / .62)`
-  - cyan: `#00E0FF`
-  - purple: `#A855F7`
-  - red: `#FF3B5C`
-  - green: `#00F5A0`
-  - dark: `#0F0F0F`
-- Radii: cards `12px`, modals `24px`
-- Typography: Inter (body), Space Grotesk (headers), JetBrains Mono (numbers)
+## Prerequisites
+- Linux host (Ubuntu 20.04+ or Amazon Linux 2 recommended)
+- `angelctl` installed and authenticated to your environment
+- Network access to NATS, Redis, and exchanges
+- `jq`, `bc`, `curl`, and `git` installed (or run `scripts/install_deps.sh`)
+- Populate `.env` from `.env.example`
 
-## Development
-```
-pnpm install
-pnpm dev
+## Quick Start
+```bash
+cp .env.example .env
+# Edit .env with real values (NATS/Redis URLs, keys, NAV, MAX_DD)
+
+source .env
+scripts/install_deps.sh
+scripts/configure.sh
+scripts/deploy_governance.sh
+scripts/setup_swarm.sh
+scripts/set_orb.sh
+scripts/set_risk_kelly.sh
+scripts/setup_execution_mesh.sh
+scripts/start_dashboard.sh &
+scripts/run_compounder.sh &
+scripts/run_stress.sh
+
+# Validate & snapshot
+scripts/verify.sh
+angelctl snapshot create v10.0-pre
 ```
 
-## Production
-```
-pnpm build && pnpm start
-```
-
-## Testing
-```
-pnpm test
+## Rollback
+```bash
+scripts/rollback.sh
 ```
 
-Screenshots to be added after full UI implementation.
+## Contents
+- `scripts/`: executable deployment scripts
+- `config/controlplane.schema.json`: control-plane envelope schema
+- `k8s/agent-deployment.yaml`: example Kubernetes deployment
+- `.env.example`: environment template
+- `README.md`: this file

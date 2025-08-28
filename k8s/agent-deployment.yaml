@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: angel-agent
+  labels:
+    app: angel-agent
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: angel-agent
+  template:
+    metadata:
+      labels:
+        app: angel-agent
+    spec:
+      containers:
+        - name: agent
+          image: ghcr.io/angel-ai/agent:latest
+          envFrom:
+            - secretRef:
+                name: angel-env
+          ports:
+            - containerPort: 8080

@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ANGEL Control-Plane Envelope v1",
+  "type": "object",
+  "required": [
+    "msg_id",
+    "ts",
+    "issuer",
+    "type",
+    "ttl_ms",
+    "sig"
+  ],
+  "properties": {
+    "msg_id": { "type": "string", "pattern": "^[A-Za-z0-9-]{16,}$" },
+    "ts": { "type": "string", "format": "date-time" },
+    "issuer": { "type": "string", "minLength": 3 },
+    "type": {
+      "type": "string",
+      "enum": ["halt","resume","cancel_all","gear_set","gear_restore"]
+    },
+    "scope": {
+      "type": "string",
+      "enum": ["global","portfolio","symbol"]
+    },
+    "targets": { "type": "array", "items": { "type": "string" } },
+    "reason": { "type": "string" },
+    "ttl_ms": { "type": "integer", "minimum": 1 },
+    "hysteresis_s": { "type": "integer", "minimum": 0 },
+    "options": {
+      "type": "object",
+      "properties": {
+        "cancel_open": { "type": "boolean" },
+        "flatten_positions": { "type": "boolean" },
+        "gear_override": { "type": "integer", "minimum": 0, "maximum": 2 },
+        "restore_gear": { "type": "boolean" },
+        "dry_run": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+    "sig": { "type": "string", "minLength": 32 }
+  },
+  "additionalProperties": false
+}
