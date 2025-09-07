@@ -1,0 +1,5 @@
+name: supreme_d_run
+sizing:
+  base_risk: 0.025
+run:
+  seed: 43

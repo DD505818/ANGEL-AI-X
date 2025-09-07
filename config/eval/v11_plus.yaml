@@ -1,0 +1,5 @@
+name: v11_plus
+sizing:
+  base_risk: 0.015
+run:
+  seed: 41
