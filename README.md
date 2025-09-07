@@ -43,3 +43,11 @@ scripts/rollback.sh
 - `k8s/agent-deployment.yaml`: example Kubernetes deployment
 - `.env.example`: environment template
 - `README.md`: this file
+
+## Strategy Evaluation
+```bash
+make bootstrap
+make eval24
+make decide
+```
+`make eval24` runs a 24-hour backtest with Monte Carlo for each config and `make decide` prints the best setup by profit and drawdown.
