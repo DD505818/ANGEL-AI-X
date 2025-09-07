@@ -2,17 +2,22 @@ import logging
 import os
 from typing import AsyncIterator, Callable
 
-import aioredis
+import redis.asyncio as aioredis
 import asyncpg
-from aioredis import Redis
-from fastapi import FastAPI
+from redis.asyncio import Redis
+from fastapi import FastAPI, status
+from fastapi.responses import JSONResponse
 from prometheus_client import Counter, Histogram, generate_latest
 from starlette.requests import Request
 from starlette.responses import Response
+import jwt
 
 logger = logging.getLogger(__name__)
 
 app = FastAPI(title="ANGEL.AI Backend", version="0.1.0")
+
+JWT_SECRET = os.getenv("JWT_SECRET", "")
+ALLOWLIST = {ip.strip() for ip in os.getenv("IP_ALLOWLIST", "").split(",") if ip.strip()}
 
 REQUEST_TIME = Histogram("http_request_duration_seconds", "Request latency")
 HITS = Counter("http_request_total", "Total HTTP hits")
@@ -65,6 +70,24 @@ async def metrics_mw(request: Request, call_next: Callable) -> Response:
         return await call_next(request)
 
 
+@app.middleware("http")
+async def security_mw(request: Request, call_next: Callable) -> Response:
+    """Enforce IP allowlist and JWT auth."""
+    client_ip = request.client.host
+    if ALLOWLIST and client_ip not in ALLOWLIST:
+        return JSONResponse({"detail": "IP not allowed"}, status_code=status.HTTP_403_FORBIDDEN)
+    if request.url.path not in {"/health", "/metrics"}:
+        auth = request.headers.get("Authorization", "")
+        if not auth.startswith("Bearer "):
+            return JSONResponse({"detail": "Missing token"}, status_code=status.HTTP_401_UNAUTHORIZED)
+        token = auth.split(" ", 1)[1]
+        try:
+            jwt.decode(token, JWT_SECRET, algorithms=["HS256"])
+        except jwt.PyJWTError:
+            return JSONResponse({"detail": "Invalid token"}, status_code=status.HTTP_401_UNAUTHORIZED)
+    return await call_next(request)
+
+
 @app.get("/health")
 async def health() -> dict[str, str]:
     """Health check endpoint."""
@@ -75,3 +98,9 @@ async def health() -> dict[str, str]:
 async def metrics() -> Response:
     """Prometheus metrics endpoint."""
     return Response(generate_latest(), media_type="text/plain")
+
+
+@app.get("/secure-ping")
+async def secure_ping() -> dict[str, str]:
+    """Endpoint that requires authentication."""
+    return {"status": "secure"}
