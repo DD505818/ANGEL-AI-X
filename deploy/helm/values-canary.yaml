@@ -1,0 +1,13 @@
+replicaCount: 3
+resources:
+  requests: { cpu: "500m", memory: "512Mi" }
+  limits:   { cpu: "2",    memory: "2Gi" }
+env:
+  ANGEL_COMPLIANCE_MODE: "crypto"
+  ANGEL_RISK_PROFILE: "base"
+  ANGEL_SOR_PROFILE: "cloud_retail"
+  ANGEL_CANARY: "true"
+podAnnotations:
+  prometheus.io/scrape: "true"
+  prometheus.io/port: "9090"
+  prometheus.io/path: "/metrics"

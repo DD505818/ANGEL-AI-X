@@ -1,0 +1,15 @@
+sor_profiles:
+  cloud_retail:
+    weights:
+      fees: 0.35
+      slippage: 0.35
+      latency: 0.15
+      qpos_penalty: 0.15
+    latency_budget_ms: 80
+  hft_colo:
+    weights:
+      fees: 0.25
+      slippage: 0.35
+      latency: 0.25
+      qpos_penalty: 0.15
+    latency_budget_ms: 5
