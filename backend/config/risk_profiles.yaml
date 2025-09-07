@@ -1,0 +1,18 @@
+risk_profiles:
+  base:
+    kelly_frac: 0.15
+    per_trade_risk: 0.0025
+    daily_loss_cap: 0.015
+    portfolio_notional_cap: 0.12
+    mdd_brake: 0.07
+    max_clock_skew_ms: 100
+  turbo:
+    kelly_frac: 0.25
+    per_trade_risk: 0.0050
+    daily_loss_cap: 0.020
+    portfolio_notional_cap: 0.12
+    mdd_brake: 0.07
+    max_clock_skew_ms: 100
+    enabled_when:
+      volxvol_min: 0.90
+      spread_bps_max: 6

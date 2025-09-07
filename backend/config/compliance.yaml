@@ -1,0 +1,11 @@
+compliance:
+  mode: crypto   # crypto | securities_us | securities_eu
+  audit:
+    worm_storage: "gcs://angel-audit"  # or s3:// with Object Lock
+    retention_days: 3650
+  kyc_aml:
+    enabled: true
+    provider: "sumsub"   # placeholder for integration key
+  toggles:
+    cat_oats_enabled: false   # true only if securities_us + regulated b/d
+    mifid_enabled: false      # true only if securities_eu

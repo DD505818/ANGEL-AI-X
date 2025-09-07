@@ -1,0 +1,24 @@
+groups:
+- name: angel-slo
+  rules:
+  - alert: VenueRejectRateHigh
+    expr: sum(rate(oms_reject_total[5m])) / sum(rate(oms_submit_total[5m])) > 0.01
+    for: 10m
+    labels: {severity: page}
+    annotations:
+      summary: "Rejects >1% for 10m"
+      runbook: "runbooks/venue_reject.md"
+  - alert: DecisionLatencyP95Burn
+    expr: histogram_quantile(0.95, sum(rate(decision_latency_ms_bucket[5m])) by (le)) > 150
+    for: 10m
+    labels: {severity: page}
+    annotations:
+      summary: "Decision latency p95 > 150ms"
+      runbook: "runbooks/latency.md"
+  - alert: MissedStops
+    expr: increase(risk_missed_stop_total[15m]) > 0
+    for: 1m
+    labels: {severity: page}
+    annotations:
+      summary: "Missed stop detected"
+      runbook: "runbooks/stops.md"
