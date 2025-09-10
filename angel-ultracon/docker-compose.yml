@@ -1,0 +1,22 @@
+version: "3.9"
+services:
+  nats:
+    image: nats:2.10
+    command: ["-js","-sd","/data"]
+    ports: ["4222:4222"]
+  redis:
+    image: redis:7-alpine
+    ports: ["6379:6379"]
+  backend:
+    build: ./backend
+    env_file: .env
+    depends_on: [nats, redis]
+    ports: ["8000:8000"]
+    security_opt: ["no-new-privileges:true"]
+    read_only: true
+    tmpfs: ["/tmp"]
+  web:
+    build: ./web
+    env_file: .env
+    depends_on: [backend]
+    ports: ["3000:3000"]
