@@ -1,0 +1,12 @@
+scenarios:
+  - name: exchange_halt
+    action: drop_egress
+    duration: 300
+  - name: flash_crash
+    action: widen_spreads
+    factor: 5
+    duration: 120
+  - name: latency_spike
+    action: inject_latency_ms
+    value: 250
+    duration: 600
