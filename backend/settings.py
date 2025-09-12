@@ -1,6 +1,6 @@
 """Application configuration settings using Pydantic BaseSettings."""
 from typing import List, Optional
-from pydantic import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
@@ -27,8 +27,7 @@ class Settings(BaseSettings):
     okx_key: Optional[str] = None
     okx_secret: Optional[str] = None
 
-    class Config:
-        env_file = ".env"  # development only
+    model_config = SettingsConfigDict(env_file=".env")  # development only
 
 
 settings = Settings()

@@ -1,10 +1,17 @@
 """Health check endpoints."""
 from fastapi import APIRouter
+from pydantic import BaseModel
 
 router = APIRouter(tags=["health"])
 
 
-@router.get("/healthz")
-async def health() -> dict[str, str]:
+class HealthStatus(BaseModel):
+    """Schema for health check responses."""
+
+    status: str
+
+
+@router.get("/healthz", response_model=HealthStatus)
+async def health() -> HealthStatus:
     """Liveness probe returning static status."""
-    return {"status": "ok"}
+    return HealthStatus(status="ok")
