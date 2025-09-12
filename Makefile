@@ -1,4 +1,4 @@
-.PHONY: bootstrap eval24 decide
+.PHONY: bootstrap eval24 decide test
 
 bootstrap:
 	pip install -r requirements.txt >/dev/null
@@ -8,3 +8,6 @@ eval24:
 
 decide:
 	python -m evaluation.selector
+
+test:
+	pytest

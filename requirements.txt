@@ -16,3 +16,4 @@ openai==1.40.2
 optuna==3.6.1
 matplotlib==3.8.2
 pandas==2.2.2
+pydantic-settings==2.10.1

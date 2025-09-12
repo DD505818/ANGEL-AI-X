@@ -51,3 +51,9 @@ make eval24
 make decide
 ```
 `make eval24` runs a 24-hour backtest with Monte Carlo for each config and `make decide` prints the best setup by profit and drawdown.
+
+## Testing
+```bash
+make test
+```
+Run the FastAPI and trading unit tests.
