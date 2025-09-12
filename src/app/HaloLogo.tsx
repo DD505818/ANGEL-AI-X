@@ -1,5 +1,4 @@
-import Image from "next/image";
-import type { ReactElement } from "react";
+
 
 /**
  * HaloLogo lazily renders the ANGEL.AI logo image.
