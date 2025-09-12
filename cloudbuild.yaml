@@ -1,0 +1,12 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      [
+        'build',
+        '-t','gcr.io/$PROJECT_ID/angelai-app',
+        '--no-cache',
+        '.'
+      ]
+images:
+  - 'gcr.io/$PROJECT_ID/angelai-app'
+
