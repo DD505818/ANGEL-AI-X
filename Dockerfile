@@ -2,7 +2,8 @@
 FROM node:20-alpine AS deps
 WORKDIR /app
 COPY package.json package-lock.json ./
-RUN npm ci --prefer-offline --no-audit --fund=false
+RUN npm install --package-lock-only \
+ && npm ci --prefer-offline --no-audit --fund=false
 
 # ---- builder ----
 FROM node:20-alpine AS builder

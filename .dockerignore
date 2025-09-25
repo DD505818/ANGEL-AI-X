@@ -1,0 +1,13 @@
+# prevent giant contexts and leaking secrets
+node_modules
+.next
+.git
+.gitignore
+Dockerfile
+cloudbuild.yaml
+README.md
+npm-debug.log
+.env
+.env.*
+dist
+coverage

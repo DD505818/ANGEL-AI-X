@@ -1,12 +1,62 @@
+# Cloud Build pipeline for ANGEL.AI Next.js app
+# - Builds Docker image from Dockerfile
+# - Pushes to Artifact Registry (recommended) or Container Registry (fallback)
+# - Deploys to Cloud Run
+
+substitutions:
+  _SERVICE: angelai-app          # <-- change if desired
+  _REGION: us-central1           # <-- change to your region
+  _REPO: angelai                 # <-- Artifact Registry repo name
+  _IMAGE: angelai-app            # <-- image name (no tag)
+  _PLATFORM: managed
+  _CPU: "1"
+  _MEMORY: "512Mi"
+  _PORT: "3000"
+  _MIN_INSTANCES: "0"
+  _MAX_INSTANCES: "3"
+
+options:
+  logging: CLOUD_LOGGING_ONLY
+  machineType: E2_HIGHCPU_8
+
 steps:
-  - name: 'gcr.io/cloud-builders/docker'
+  # Authenticate to Artifact Registry (if using AR)
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk
+    entrypoint: bash
+    args:
+      - -c
+      - |
+        gcloud auth configure-docker ${_REGION}-docker.pkg.dev -q
+
+  # Build image (no-cache once if you’re fighting stale layers; default uses cache)
+  - name: gcr.io/cloud-builders/docker
     args:
       [
-        'build',
-        '-t','gcr.io/$PROJECT_ID/angelai-app',
-        '--no-cache',
-        '.'
+        "build",
+        "-t", "${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_IMAGE}:$SHORT_SHA",
+        "."
       ]
-images:
-  - 'gcr.io/$PROJECT_ID/angelai-app'
 
+  # Push image
+  - name: gcr.io/cloud-builders/docker
+    args: ["push", "${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_IMAGE}:$SHORT_SHA"]
+
+  # Deploy to Cloud Run
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk
+    args:
+      [
+        "gcloud","run","deploy","${_SERVICE}",
+        "--image","${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_IMAGE}:$SHORT_SHA",
+        "--region","${_REGION}",
+        "--platform","${_PLATFORM}",
+        "--allow-unauthenticated",
+        "--port","${_PORT}",
+        "--cpu","${_CPU}",
+        "--memory","${_MEMORY}",
+        "--min-instances","${_MIN_INSTANCES}",
+        "--max-instances","${_MAX_INSTANCES}",
+        "--set-env-vars","NODE_ENV=production,NEXT_TELEMETRY_DISABLED=1"
+      ]
+
+images:
+  - "${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_IMAGE}:$SHORT_SHA"
